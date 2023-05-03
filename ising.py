@@ -5,7 +5,7 @@ import time
 
 # Define Parameters
 N = 50 # lattice length
-T = 1. # Temperature
+T = 0.1 # Temperature
 J = 2. # Interaction Energy
 h = 0.0 # External field, dramatically increases calculation time if not 0
 steps = -1 # number of total steps, inf if negative
@@ -19,7 +19,8 @@ B = 1./T # inverse temperature
 spin_config = np.random.randint(low=0,high=2,size = (N,N))*2 -1
 
 ion() # set interacting on for matplotlib, neccessary for updating figure
-figure('Ising Model') # Create figure
+fig = figure('Ising Model') # Create figure
+img = None
 ix = 0 # Set index (iterations) to zero
 while (ix < steps) or steps < 0:
     # Select spin with selection probability = 1/L
@@ -55,12 +56,15 @@ while (ix < steps) or steps < 0:
     # update plot
     if (ix % update_ix) == 0:
         print('steps:', ix) # print progress
-        clf() # clear figure
-        imshow(spin_config,cmap='Greys_r',interpolation = 'none') # image plot
+#        clf() # clear figure
+        if img == None:
+            img = imshow(spin_config,cmap='Greys_r',interpolation = 'none') # image plot
+        else:
+            img.set_data(spin_config)
         tick_params(axis='x',which='both',bottom='off',top='off',labelbottom='off')
         tick_params(axis='y',which='both',right='off',left='off',labelleft='off')
-        draw() # update figure
-        pause(0.001) # Pause required to update figure
+        fig.canvas.draw() # update figure
+        fig.canvas.flush_events()
 
     # increment index (iteration)
     ix += 1
