@@ -60,7 +60,7 @@ while (ix < steps) or steps < 0:
         tick_params(axis='x',which='both',bottom='off',top='off',labelbottom='off')
         tick_params(axis='y',which='both',right='off',left='off',labelleft='off')
         draw() # update figure
-        pause(0.0001) # Pause required to update figure
+        pause(0.001) # Pause required to update figure
 
     # increment index (iteration)
     ix += 1
