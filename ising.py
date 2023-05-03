@@ -20,7 +20,7 @@ spin_config = np.random.randint(low=0,high=2,size = (N,N))*2 -1
 
 ion() # set interacting on for matplotlib, neccessary for updating figure
 fig = figure('Ising Model') # Create figure
-img = None
+img = imshow(spin_config,cmap='Greys_r',interpolation = 'none') # create image plot
 ix = 0 # Set index (iterations) to zero
 while (ix < steps) or steps < 0:
     # Select spin with selection probability = 1/L
@@ -56,15 +56,11 @@ while (ix < steps) or steps < 0:
     # update plot
     if (ix % update_ix) == 0:
         print('steps:', ix) # print progress
-#        clf() # clear figure
-        if img == None:
-            img = imshow(spin_config,cmap='Greys_r',interpolation = 'none') # image plot
-        else:
-            img.set_data(spin_config)
+        img.set_data(spin_config)
         tick_params(axis='x',which='both',bottom='off',top='off',labelbottom='off')
         tick_params(axis='y',which='both',right='off',left='off',labelleft='off')
-        fig.canvas.draw() # update figure
-        fig.canvas.flush_events()
+        fig.canvas.draw() # Update figure
+        fig.canvas.flush_events() # Flush events to update figure
 
     # increment index (iteration)
     ix += 1
